@@ -1,0 +1,17 @@
+{
+  "name": "com.liangxiegame.packagekit",
+  "version": "1.0.0",
+  "displayName": "PackageKit",
+  "description": "PackageKit 是一个简单易用的包管理工具 | PackageKit is package management toolkit",
+  "license": "MIT",
+  "unity": "2018.4",
+  "documentationUrl": "https://qframework.cn/",
+  "keywords": [
+    "PackageKit"
+  ],
+  "author": {
+    "name": "liangxie",
+    "email": "liangxiegame@163.com",
+    "url": "https://qframework.cn"
+  }
+}
