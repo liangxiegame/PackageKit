@@ -13,7 +13,7 @@
 * PackageManager
     * add from package git url：https://github.com/liangxiegame/PackageKit.git 
     * 或者国内镜像仓库：https://gitee.com/liangxiegame/PackageKit.git
-* 或者[点此下载 PackageKit.unitypackage](ResKit.unitypackage) 并安装到自己项目中的任意脚本中
+* 或者[点此下载 PackageKit.unitypackage](PackageKit.unitypackage) 并安装到自己项目中的任意脚本中
 
 ## 使用指南
 
