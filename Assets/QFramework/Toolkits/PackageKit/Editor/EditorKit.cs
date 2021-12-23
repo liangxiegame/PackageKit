@@ -15,7 +15,7 @@ using UnityEditor;
 namespace QFramework
 {
     [InitializeOnLoad]
-    internal sealed class EasyIMGUI
+    public sealed class EasyIMGUI
     {
         public static ILabel Label()
         {
@@ -360,7 +360,7 @@ namespace QFramework
         }
     }
     
-    internal interface IToolbar : IMGUIView
+    public interface IToolbar : IMGUIView
     {
         IToolbar Menus(List<string> menuNames);
         IToolbar AddMenu(string name, Action<string> onMenuSelected = null);
@@ -427,7 +427,7 @@ namespace QFramework
         }
     }
     
-    internal interface IToggle : IMGUIView,IHasText<IToggle>
+    public interface IToggle : IMGUIView,IHasText<IToggle>
     {
         BindableProperty<bool> ValueProperty { get; }
 
@@ -608,7 +608,7 @@ namespace QFramework
         }
     }
     
-    internal interface ITextArea : IMGUIView, IHasText<ITextArea>, IXMLToObjectConverter
+    public interface ITextArea : IMGUIView, IHasText<ITextArea>, IXMLToObjectConverter
     {
         BindableProperty<string> Content { get; }
     }
@@ -656,14 +656,14 @@ namespace QFramework
         }
     }
     
-    internal interface ITextField : IMGUIView, IHasText<ITextField>,IXMLToObjectConverter
+    public interface ITextField : IMGUIView, IHasText<ITextField>,IXMLToObjectConverter
     {
         BindableProperty<string> Content { get; }
 
         ITextField PasswordMode();
     }
 
-    internal class TextField : View,ITextField
+    public class TextField : View,ITextField
     {
         public TextField()
         {
@@ -1554,15 +1554,7 @@ namespace QFramework
         
         
     }
-     
-     /// <summary>
-     /// 让数据在编辑器中只读
-     /// </summary>
-     public class ReadOnlyAttribute  : PropertyAttribute
-     {
-        
-     }
-     
+    
      public class CrossPlatformGUILayout
      {
 
@@ -1881,7 +1873,7 @@ namespace QFramework
         }
     }
     
-    internal class TreeNode : VerticalLayout
+    public class TreeNode : VerticalLayout
     {
         public BindableProperty<bool> Spread = null;
 
