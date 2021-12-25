@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 using System.ComponentModel;
+using UnityEditor;
 
 namespace QFramework
 {
@@ -33,9 +34,9 @@ namespace QFramework
     [PackageKitRenderOrder(int.MaxValue - 1)]
     public class RoadmapView : VerticalLayout, IPackageKitView
     {
-        public PackageKitContainer Container { get; set; }
+        public EditorWindow EditorWindow { get; set; }
 
-        public void Init(PackageKitContainer container)
+        public void Init()
         {
             EasyIMGUI.Label().Text("Roadmap 路线图").FontSize(12).Parent(this);
 
@@ -87,6 +88,11 @@ namespace QFramework
         void IPackageKitView.OnGUI()
         {
             DrawGUI();
+        }
+
+        public void OnWindowGUIEnd()
+        {
+            
         }
 
         public void OnDispose()

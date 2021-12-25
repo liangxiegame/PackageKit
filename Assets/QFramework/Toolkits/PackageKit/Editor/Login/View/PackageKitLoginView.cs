@@ -26,6 +26,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using UnityEditor;
 
 namespace QFramework
 {
@@ -34,17 +35,12 @@ namespace QFramework
     [PackageKitRenderOrder(int.MaxValue)]
     internal class PackageKitLoginView : VerticalLayout, IPackageKitView,IController,IUnRegisterList
     {
-        private PackageKitContainer mContainer;
 
+        public EditorWindow EditorWindow { get; set; }
 
-        public bool Ignore { get; private set; }
+      
 
-        public bool Enabled
-        {
-            get { return true; }
-        }
-        
-        public void Init(PackageKitContainer container)
+        public void Init()
         {
             EasyIMGUI.Label().Text("账户信息").FontSize(12).Parent(this);
 
@@ -74,12 +70,6 @@ namespace QFramework
                 .AddToUnregisterList(this);
         }
 
-        PackageKitContainer IPackageKitView.Container
-        {
-            get => mContainer;
-            set => mContainer = value;
-        }
-        
         public void OnUpdate()
         {
         }
@@ -89,14 +79,10 @@ namespace QFramework
             DrawGUI();
         }
 
-
-        public class LocaleText
+        public void OnWindowGUIEnd()
         {
-            public static string UserInfo
-            {
-                get { return Language.IsChinese ? "用户信息" : "User Info"; }
-            }
         }
+
 
         public void OnDispose()
         {

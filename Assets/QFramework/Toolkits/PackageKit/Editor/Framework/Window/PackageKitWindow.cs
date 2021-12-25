@@ -136,6 +136,7 @@ namespace QFramework
             public string TypeName;
             public string InitFunc;
             public string OnGUIFunc;
+            public string OnWindowGUIEndFunc;
             public string DisposeFunc;
             public string GroupName;
             public string DisplayName;
@@ -151,10 +152,11 @@ namespace QFramework
             private object mRenderObj;
             private MethodInfo mInitFunc;
             private MethodInfo mOnGUIFunc;
+            private MethodInfo mOnWindowGUIEndFunc;
             private MethodInfo mDisposeFunc;
+            private PropertyInfo mEditorWindowProperty;
 
             private object[] mEmptyParams = new Object[] { };
-            private PackageKitContainer mContainer;
 
             public void Load()
             {
@@ -163,15 +165,28 @@ namespace QFramework
                 mRenderObj = Activator.CreateInstance(mType);
                 mInitFunc = mType.GetMethod(InitFunc, BindingFlags.Instance | BindingFlags.Public);
                 mOnGUIFunc = mType.GetMethod(OnGUIFunc, BindingFlags.Instance | BindingFlags.Public);
+                
+                if (!string.IsNullOrEmpty(OnWindowGUIEndFunc))
+                {
+                    mOnWindowGUIEndFunc =
+                        mType.GetMethod(OnWindowGUIEndFunc, BindingFlags.Instance | BindingFlags.Public);
+                }
+
                 mDisposeFunc = mType.GetMethod(DisposeFunc, BindingFlags.Instance | BindingFlags.Public);
-            }
-            PackageKitContainer IPackageKitView.Container
-            {
-                get => mContainer;
-                set => mContainer = value;
+                mEditorWindowProperty = mType.GetProperty("EditorWindow", BindingFlags.Instance | BindingFlags.Public);
             }
 
-            public void Init(PackageKitContainer container)
+
+            public EditorWindow EditorWindow
+            {
+                get => mEditorWindowProperty?.GetMethod.Invoke(mRenderObj, mEmptyParams) as EditorWindow;
+                set
+                {
+                    mEditorWindowProperty?.SetMethod.Invoke(mRenderObj, new object[] { value });
+                }
+            }
+
+            public void Init()
             {
                 mInitFunc?.Invoke(mRenderObj,mEmptyParams);
             }
@@ -185,6 +200,11 @@ namespace QFramework
                 mOnGUIFunc?.Invoke(mRenderObj,mEmptyParams);
             }
 
+            public void OnWindowGUIEnd()
+            {
+                mOnWindowGUIEndFunc?.Invoke(mRenderObj,mEmptyParams);
+            }
+            
             public void OnDispose()
             {
                 mDisposeFunc?.Invoke(mRenderObj,mEmptyParams);
@@ -215,7 +235,8 @@ namespace QFramework
                 renderInfo.DisplayName = infoNew.DisplayName;
                 renderInfo.GroupName = infoNew.GroupName;
                 renderInfo.RenderOrder = infoNew.RenderOrder;
-                renderInfo.Interface.Init(null);
+                renderInfo.Interface.EditorWindow = this;
+                renderInfo.Interface.Init();
                 return renderInfo;
             });
 
@@ -286,6 +307,7 @@ namespace QFramework
             mSplitView.OnGUI(new Rect(new Vector2(0, r.yMax),
                 new Vector2(position.width, position.height - r.height)));
 
+            mSelectedViewRender?.Interface?.OnWindowGUIEnd();
             RenderEndCommandExecutor.ExecuteCommand();
         }
 

@@ -38,7 +38,6 @@ namespace QFramework
     [PackageKitRenderOrder(1)]
     internal class PackageManagerView : IPackageKitView, IController,IUnRegisterList
     {
-        public PackageKitContainer Container { get; set; }
 
         private IPopup mCategoriesSelectorView = null;
 
@@ -55,9 +54,10 @@ namespace QFramework
 
         private bool mIsOfficial = true;
 
-        public void Init(PackageKitContainer container)
+        public EditorWindow EditorWindow { get; set; }
+
+        public void Init()
         {
-            Container = container;
             var localPackageVersionModel = this.GetModel<ILocalPackageVersionModel>();
 
             // 左侧
@@ -333,6 +333,7 @@ namespace QFramework
 
         private VerticalSplitView mSplitView;
 
+
         public void OnUpdate()
         {
             if (mMarkdownViewer != null && mMarkdownViewer.Update())
@@ -346,6 +347,11 @@ namespace QFramework
             var r = GUILayoutUtility.GetLastRect();
             mSplitView.OnGUI(new Rect(new Vector2(0, r.yMax),
                 new Vector2(mPackageKitWindow.position.width, mPackageKitWindow.position.height - r.height)));
+        }
+
+        public void OnWindowGUIEnd()
+        {
+            
         }
 
         public void OnDispose()

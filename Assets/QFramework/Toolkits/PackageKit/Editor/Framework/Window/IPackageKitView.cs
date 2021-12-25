@@ -1,16 +1,20 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 
 namespace QFramework
 {
     public interface IPackageKitView
     {
-        PackageKitContainer Container { get; set; }
 
-        void Init(PackageKitContainer container);
+        EditorWindow EditorWindow { get; set; }
+
+        void Init();
 
         void OnUpdate();
         void OnGUI();
+
+        void OnWindowGUIEnd();
 
         void OnDispose();
         void OnShow();

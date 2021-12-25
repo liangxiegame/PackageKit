@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 
 namespace QFramework
@@ -107,8 +108,9 @@ namespace QFramework
             
             foreach (var view in views)
             {
-                view.Container = null;
-                view.Init(null);
+                
+                view.EditorWindow = EditorWindow.GetWindow<PackageKitWindow>();
+                view.Init();
             }
         }
 

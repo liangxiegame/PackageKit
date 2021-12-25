@@ -35,11 +35,11 @@ namespace QFramework
 	[PackageKitRenderOrder(int.MinValue)]
 	public class AdvertisementView : IPackageKitView
 	{
-		public PackageKitContainer Container { get; set; }
-		
 		private IXMLView mView = null;
 
-		public void Init(PackageKitContainer container)
+		public EditorWindow EditorWindow { get; set; }
+
+		public void Init()
 		{
 			var convertSystem = XMLKit.Get.SystemLayer.Get<IXMLToObjectConvertSystem>();
 			
@@ -67,6 +67,11 @@ namespace QFramework
 		public void OnGUI()
 		{
 			mView.DrawGUI();
+		}
+
+		public void OnWindowGUIEnd()
+		{
+			
 		}
 
 		public void OnDispose()
